@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VYLEE THE CREATOR - Affiliate & Content Creator Masterclass</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Animation cho Toast */
+        .toast-active {
+            transform: translate(-50%, 0);
+            opacity: 1;
+        }
+        .toast-hidden {
+            transform: translate(-50%, 100px);
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+        <div class="container mx-auto px-4 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-2 cursor-pointer" onclick="resetFilters()">
+                <div class="bg-blue-600 text-white p-2 rounded-lg">
+                    <i data-lucide="zap"></i>
+                </div>
+                <span class="text-xl font-bold text-gray-900 tracking-tight">VYLEE THE CREATOR</span>
+            </div>
+
+            <!-- Search Bar (Desktop) -->
+            <div class="hidden md:flex flex-1 max-w-xl mx-8 relative">
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="Tìm kiếm lộ trình học tập..."
+                    oninput="handleSearch(this.value)"
+                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                >
+                <i data-lucide="search" class="absolute left-3 top-2.5 text-gray-400 w-5 h-5"></i>
+            </div>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-4 text-gray-700">
+                <button class="relative p-2 hover:bg-gray-100 rounded-full transition-colors" onclick="toggleCart(true)">
+                    <i data-lucide="shopping-cart"></i>
+                    <span id="cart-count" class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center hidden">0</span>
+                </button>
+                
+                <div class="hidden md:flex gap-2">
+                    <button class="px-4 py-2 font-medium text-gray-700 hover:text-blue-600 transition-colors">Đăng nhập</button>
+                    <button class="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-all shadow-md">Bắt đầu ngay</button>
+                </div>
+
+                <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 p-4 bg-white">
+            <div class="relative mb-4">
+                <input type="text" placeholder="Tìm kiếm khóa học..." oninput="handleSearch(this.value)" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg">
+                <i data-lucide="search" class="absolute left-3 top-2.5 text-gray-400 w-5 h-5"></i>
+            </div>
+            <div class="flex flex-col gap-2">
+                <button class="w-full py-2 font-medium text-gray-700 border border-gray-300 rounded-lg text-center">Đăng nhập</button>
+                <button class="w-full py-2 bg-blue-600 text-white font-medium rounded-lg text-center shadow-md">Tham gia ngay</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="bg-gradient-to-br from-slate-50 to-white py-12 md:py-24">
+        <div class="container mx-auto px-4 lg:px-8 flex flex-col-reverse md:flex-row items-center gap-8 md:gap-12">
+            <div class="flex-1 space-y-8">
+                <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold border border-blue-100">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i> Lộ trình Affiliate & Creator bởi Vylee
+                </div>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-[1.1]">
+                    Biến nội dung thành <br/>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Thu nhập thụ động</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 leading-relaxed max-w-xl">
+                    Đừng chỉ lướt web, hãy trở thành người tạo ra giá trị. Lộ trình thực chiến giúp bạn xây dựng thương hiệu cá nhân và tối ưu hóa doanh thu từ con số 0.
+                </p>
+                <div class="flex flex-wrap gap-4 pt-2">
+                    <button class="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 shadow-xl shadow-blue-200 transition-all transform hover:-translate-y-1">
+                        Khám phá lộ trình
+                    </button>
+                    <button class="px-8 py-4 bg-white text-gray-800 font-bold rounded-xl border border-gray-200 hover:border-blue-600 hover:text-blue-600 transition-all">
+                        Tư vấn miễn phí
+                    </button>
+                </div>
+                <div class="flex items-center gap-6 pt-4 text-sm text-gray-500 font-medium">
+                    <span class="flex items-center gap-2"><i data-lucide="check" class="text-green-500 w-5 h-5"></i> Cập nhật mới nhất 2024</span>
+                    <span class="flex items-center gap-2"><i data-lucide="check" class="text-green-500 w-5 h-5"></i> Support trực tiếp 24/7</span>
+                </div>
+            </div>
+            <div class="flex-1 w-full relative">
+                <div class="relative z-10 aspect-square md:aspect-[4/4] rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
+                    <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?auto=format&fit=crop&w=1200&q=80" alt="Vylee - Học làm Creator" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                </div>
+                <!-- Floating Elements -->
+                <div class="absolute -bottom-6 -left-6 bg-white p-5 rounded-2xl shadow-2xl flex items-center gap-4 z-20 border border-gray-100 animate-bounce">
+                    <div class="bg-green-100 p-3 rounded-xl text-green-600">
+                        <i data-lucide="trending-up" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <p class="font-black text-2xl text-gray-900">+1000</p>
+                        <p class="text-xs text-gray-500 font-bold uppercase tracking-wider">Học viên thành công</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENTOR SECTION -->
+    <section class="py-20 bg-white overflow-hidden">
+        <div class="container mx-auto px-4 lg:px-8">
+            <div class="bg-slate-900 rounded-3xl p-8 md:p-16 relative flex flex-col md:flex-row items-center gap-12 overflow-hidden shadow-2xl">
+                <!-- Background Pattern -->
+                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+                
+                <div class="w-48 h-48 md:w-64 md:h-64 rounded-2xl overflow-hidden shadow-2xl border-4 border-slate-700/50 flex-shrink-0">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80" alt="Vylee Mentor" class="w-full h-full object-cover">
+                </div>
+                
+                <div class="flex-1 text-center md:text-left space-y-6">
+                    <h2 class="text-3xl md:text-5xl font-black text-white">Gặp gỡ Vylee - Mentor của bạn</h2>
+                    <p class="text-slate-300 text-lg leading-relaxed max-w-2xl">
+                        "Tôi đã dành 5 năm để thử và sai trong thế giới Affiliate. Sứ mệnh của tôi là giúp bạn rút ngắn quãng đường đó và bắt đầu tạo ra dòng tiền thực thụ chỉ sau 30 ngày."
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 py-4">
+                        <div class="space-y-1 border-l-2 border-blue-500 pl-4">
+                            <p class="text-3xl font-black text-white">05 Năm</p>
+                            <p class="text-slate-400 text-sm font-semibold uppercase">Kinh nghiệm thực chiến</p>
+                        </div>
+                        <div class="space-y-1 border-l-2 border-blue-500 pl-4">
+                            <p class="text-3xl font-black text-white">100K+</p>
+                            <p class="text-slate-400 text-sm font-semibold uppercase">Followers Đa nền tảng</p>
+                        </div>
+                        <div class="space-y-1 border-l-2 border-blue-500 pl-4">
+                            <p class="text-3xl font-black text-white">1000+</p>
+                            <p class="text-slate-400 text-sm font-semibold uppercase">Học viên đang kiếm tiền</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                            <div class="flex items-center gap-2 text-slate-300 text-sm bg-slate-800/50 px-4 py-2 rounded-lg border border-slate-700">
+                                <i data-lucide="award" class="w-4 h-4 text-blue-400"></i> Top 1 Affiliate Network 2023
+                            </div>
+                            <div class="flex items-center gap-2 text-slate-300 text-sm bg-slate-800/50 px-4 py-2 rounded-lg border border-slate-700">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i> Đối tác TikTok Shop Việt Nam
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="py-20 container mx-auto px-4 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+            <div class="max-w-2xl">
+                <h2 class="text-4xl font-black text-gray-900 mb-4 tracking-tight">Chọn gói lộ trình phù hợp</h2>
+                <p class="text-gray-600 text-lg">Mọi hành trình vạn dặm đều bắt đầu từ một bước chân. Hãy chọn cấp độ phù hợp với mục tiêu của bạn ngay hôm nay.</p>
+            </div>
+            
+            <!-- Category Filter -->
+            <div id="category-list" class="flex overflow-x-auto w-full md:w-auto pb-2 md:pb-0 gap-2 hide-scrollbar">
+                <!-- Sẽ được render bởi JS -->
+            </div>
+        </div>
+
+        <!-- Courses Grid -->
+        <div id="courses-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Sẽ được render bởi JS -->
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-300 py-16">
+        <div class="container mx-auto px-4 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="col-span-1 md:col-span-2">
+                <div class="flex items-center gap-2 mb-6 text-white">
+                    <i data-lucide="zap" class="text-blue-500 fill-blue-500"></i>
+                    <span class="text-2xl font-black tracking-tight">VYLEE THE CREATOR</span>
+                </div>
+                <p class="text-slate-400 max-w-sm leading-relaxed mb-6">
+                    Giúp các thế hệ Content Creator Việt Nam vươn ra thế giới và làm chủ tài chính từ sự sáng tạo của chính mình.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                    <a href="#" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-red-500 transition-colors"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+                    <a href="#" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6 text-lg">Khóa học</h4>
+                <ul class="space-y-3 text-sm font-medium">
+                    <li><a href="#" class="hover:text-blue-400 transition-colors">Tư duy Affiliate</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition-colors">Kỹ năng Creator</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition-colors">Xây dựng Thương hiệu</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition-colors">Premium Combo</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6 text-lg">Thông tin</h4>
+                <ul class="space-y-3 text-sm font-medium">
+                    <li><a href="#" class="hover:text-blue-400 transition-colors">Về Vylee</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition-colors">Chính sách bảo mật</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition-colors">Điều khoản dịch vụ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container mx-auto px-4 lg:px-8 mt-16 pt-8 border-t border-slate-800 text-center text-sm text-slate-500">
+            <p>© 2024 VYLEE THE CREATOR Masterclass. Design by Team Final Project.</p>
+        </div>
+    </footer>
+
+    <!-- CART MODAL (SIDEBAR) -->
+    <div id="cart-modal" class="fixed inset-0 z-50 invisible transition-all duration-300">
+        <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm" onclick="toggleCart(false)"></div>
+        <div id="cart-sidebar" class="absolute top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl translate-x-full transition-transform duration-300 flex flex-col">
+            <div class="p-6 border-b flex items-center justify-between bg-slate-50">
+                <h2 class="text-xl font-black flex items-center gap-2"><i data-lucide="shopping-cart"></i> GIỎ HÀNG CỦA BẠN</h2>
+                <button onclick="toggleCart(false)" class="p-2 hover:bg-gray-200 rounded-full transition-colors"><i data-lucide="x"></i></button>
+            </div>
+            <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-6">
+                <!-- Nội dung giỏ hàng -->
+            </div>
+            <div id="cart-footer" class="p-6 border-t bg-slate-50 hidden shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.05)]">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-gray-600 font-bold uppercase tracking-widest text-xs">Tổng đầu tư:</span>
+                    <span id="cart-total" class="text-3xl font-black text-blue-600">0đ</span>
+                </div>
+                <button class="w-full py-4 bg-blue-600 text-white font-black rounded-2xl hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 uppercase tracking-widest">
+                    Xác nhận đăng ký ngay
+                </button>
+                <p class="text-center text-[10px] text-gray-400 mt-4">Hỗ trợ trả góp 0% qua thẻ tín dụng</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="fixed bottom-6 left-1/2 toast-hidden z-50 bg-slate-900 text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-3 transition-all duration-300 border border-slate-700">
+        <div class="bg-green-500 p-1 rounded-full"><i data-lucide="check" class="text-white w-4 h-4"></i></div>
+        <span class="font-bold">Đã thêm vào lộ trình của bạn!</span>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        const MOCK_COURSES = [
+            { 
+                id: 1, 
+                title: 'Affiliate Entry: Tư Duy & Quy Trình Cơ Bản', 
+                instructor: 'Vylee Mentor', 
+                price: 99000, 
+                originalPrice: 299000,
+                category: 'Tư duy', 
+                image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80',
+                desc: 'Khóa học nền tảng giúp bạn hiểu rõ bản chất Affiliate, cách chọn ngách (Niche) và mạng lưới phù hợp.'
+            },
+            { 
+                id: 2, 
+                title: 'Creator Mid: Edit Video & Viết Lách Triệu View', 
+                instructor: 'Vylee Mentor', 
+                price: 199000, 
+                originalPrice: 599000,
+                category: 'Kỹ năng', 
+                image: 'https://images.unsplash.com/photo-1492691523569-7379e9561025?auto=format&fit=crop&w=800&q=80',
+                desc: 'Làm chủ CapCut, AI viết content và các kỹ thuật kể chuyện (Storytelling) giữ chân người xem.'
+            },
+            { 
+                id: 3, 
+                title: 'Advanced: Thương Hiệu Cá Nhân & Tối Ưu Doanh Thu', 
+                instructor: 'Vylee Mentor', 
+                price: 299000, 
+                originalPrice: 1200000,
+                category: 'Doanh thu', 
+                image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=80',
+                desc: 'Công thức chuyển đổi followers thành khách hàng, xây dựng nhân hiệu bền vững trên Đa nền tảng.'
+            },
+            { 
+                id: 4, 
+                title: 'Premium Master Combo: Affiliate & Creator Pro', 
+                instructor: 'Vylee Mentor', 
+                price: 499000, 
+                originalPrice: 2500000,
+                category: 'Combo', 
+                image: 'https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&w=800&q=80',
+                desc: 'Sở hữu tất cả các khóa trên + 4 buổi Zoom hỗ trợ 1:1 trực tiếp cùng Vylee, bộ tài liệu mẫu và cộng đồng VIP.'
+            }
+        ];
+
+        let cart = [];
+        let activeCategory = 'Tất cả';
+        let searchQuery = '';
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+        }
+
+        function renderCategories() {
+            const categories = ['Tất cả', 'Tư duy', 'Kỹ năng', 'Doanh thu', 'Combo'];
+            const container = document.getElementById('category-list');
+            container.innerHTML = categories.map(cat => `
+                <button onclick="filterCategory('${cat}')" class="px-5 py-2.5 rounded-xl whitespace-nowrap text-sm font-bold transition-all ${activeCategory === cat ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 scale-105' : 'bg-white text-gray-500 border border-gray-200 hover:border-blue-400'}">
+                    ${cat}
+                </button>
+            `).join('');
+        }
+
+        function renderCourses() {
+            const container = document.getElementById('courses-grid');
+            const filtered = MOCK_COURSES.filter(c => {
+                const matchCat = activeCategory === 'Tất cả' || c.category === activeCategory;
+                const matchSearch = c.title.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchCat && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-20 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200 text-gray-500"><i data-lucide="search-x" class="w-12 h-12 mx-auto mb-4 opacity-20"></i><p class="font-bold">Không tìm thấy lộ trình phù hợp</p></div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(c => {
+                const inCart = cart.some(item => item.id === c.id);
+                return `
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col group relative">
+                    <div class="aspect-[4/3] overflow-hidden relative">
+                        <img src="${c.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-blue-600">
+                            ${c.category}
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1 space-y-4">
+                        <h3 class="font-black text-gray-900 leading-tight group-hover:text-blue-600 transition-colors">${c.title}</h3>
+                        <p class="text-xs text-gray-500 line-clamp-2 leading-relaxed">${c.desc}</p>
+                        <div class="mt-auto">
+                            <div class="flex items-end gap-2 mb-4">
+                                <span class="text-2xl font-black text-gray-900">${formatCurrency(c.price)}</span>
+                                <span class="text-sm text-gray-400 line-through mb-1">${formatCurrency(c.originalPrice)}</span>
+                            </div>
+                            <button onclick="addToCart(${c.id})" ${inCart ? 'disabled' : ''} class="w-full py-3 rounded-2xl font-black uppercase text-xs tracking-widest transition-all ${inCart ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-slate-900 text-white hover:bg-blue-600 hover:shadow-xl hover:shadow-blue-200 active:scale-95'}">
+                                ${inCart ? 'Đã trong lộ trình' : 'Bắt đầu học ngay'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+            lucide.createIcons();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items');
+            const countLabel = document.getElementById('cart-count');
+            const footer = document.getElementById('cart-footer');
+            const totalLabel = document.getElementById('cart-total');
+
+            countLabel.innerText = cart.length;
+            countLabel.classList.toggle('hidden', cart.length === 0);
+
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="h-full flex flex-col items-center justify-center text-gray-400 py-20"><i data-lucide="shopping-cart" class="w-16 h-16 mb-4 opacity-10"></i><p class="font-bold text-gray-400">Bạn chưa chọn lộ trình nào</p></div>`;
+                footer.classList.add('hidden');
+            } else {
+                container.innerHTML = cart.map(item => `
+                    <div class="flex gap-4 p-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
+                        <img src="${item.image}" class="w-20 h-20 object-cover rounded-xl flex-shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-sm font-black text-gray-900 line-clamp-2 mb-1">${item.title}</h4>
+                            <p class="text-blue-600 font-black">${formatCurrency(item.price)}</p>
+                        </div>
+                        <button onclick="removeFromCart(${item.id})" class="text-gray-300 hover:text-red-500 transition-colors self-start p-1"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
+                    </div>
+                `).join('');
+                footer.classList.remove('hidden');
+                const total = cart.reduce((sum, i) => sum + i.price, 0);
+                totalLabel.innerText = formatCurrency(total);
+            }
+            lucide.createIcons();
+        }
+
+        function addToCart(id) {
+            const course = MOCK_COURSES.find(c => c.id === id);
+            if (!cart.find(i => i.id === id)) {
+                cart.push(course);
+                showToast();
+                renderCart();
+                renderCourses();
+            }
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+            renderCart();
+            renderCourses();
+        }
+
+        function filterCategory(cat) {
+            activeCategory = cat;
+            renderCategories();
+            renderCourses();
+        }
+
+        function handleSearch(val) {
+            searchQuery = val;
+            renderCourses();
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.replace('toast-hidden', 'toast-active');
+            setTimeout(() => {
+                toast.classList.replace('toast-active', 'toast-hidden');
+            }, 2500);
+        }
+
+        function toggleCart(show) {
+            const modal = document.getElementById('cart-modal');
+            const sidebar = document.getElementById('cart-sidebar');
+            if (show) {
+                modal.classList.remove('invisible');
+                setTimeout(() => sidebar.classList.remove('translate-x-full'), 10);
+            } else {
+                sidebar.classList.add('translate-x-full');
+                setTimeout(() => modal.classList.add('invisible'), 300);
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function resetFilters() {
+            activeCategory = 'Tất cả';
+            searchQuery = '';
+            document.getElementById('search-input').value = '';
+            renderCategories();
+            renderCourses();
+        }
+
+        window.onload = () => {
+            renderCategories();
+            renderCourses();
+            renderCart();
+            lucide.createIcons();
+        };
+    </script>
+</body>
+</html>
